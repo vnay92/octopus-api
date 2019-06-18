@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const dotenvExpand = require('dotenv-expand');
 dotenvExpand(dotenv.config());
 
+const GRPC_SERVER_PORT = process.env.GRPC_SERVER_PORT;
 const PROTO_BASE_DIR = process.env.PROTO_BASE_DIR;
 const SERVICE_NAME = 'api';
 
@@ -26,6 +27,6 @@ server.addService(healthProto.HealthService.service, {
     }
 });
 
-server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
-console.log('Server running at http://0.0.0.0:50051');
+server.bind(`0.0.0.0:${GRPC_SERVER_PORT}`, grpc.ServerCredentials.createInsecure());
+console.log(`gRPC Server running at 0.0.0.0:${GRPC_SERVER_PORT}`);
 server.start();
